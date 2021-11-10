@@ -1,0 +1,128 @@
+<title>Cookie Clicker | Online Games</title>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<style>
+h3,h1{
+  text-align:center;
+  font-family:Montserrat;
+  color:dodgerblue;
+}
+
+h2{
+  font-family:Montserrat;
+  width:200px;
+}
+
+#Image{
+  width:500px;
+  
+}
+</style>
+</head>
+<body>
+<h1 id="Header">Cookie Clicker</h1>
+<h3 id="SubHeader">Rishabh Rao</h3>
+<h3 id="Instructions">Click on the cookie!</h3>
+<div style="text-align:center;">
+<img onclick="IncreaseScore()" id="Image" src="https://pngimg.com/uploads/cookie/cookie_PNG13656.png"/>
+<h3>Clicks</h3>
+<h3 id="Clicks">0</h3>
+<br/>
+<h3>Time</h3>
+<h3 id="Time"></h3>
+<br/>
+  <h2 style="border:none;"><b>Achievements</b></h2>
+  <h2 id="Bronze">Bronze</h2>
+  <h2 id="Silver">Silver</h2>
+  <h2 id="Gold">Gold</h2>
+  <h2 id="Platinum">Platinum</h2>
+  <h2 id="Diamond">Diamond</h2>
+  <h2 id="Legendary">Legendary</h2>
+  <h2 id="Legendary2">Legendary 2</h2>
+  <h2 id="Legendary3">Legendary 3</h2>
+  <h2 id="Legendary4">Legendary 4</h2>
+  <h2 id="Legendary5">Legendary 5</h2>
+  <h2 id="Legendary6">Legendary 6</h2>
+  <h2 id="Legendary7">Legendary 7</h2>
+  <h2 id="Legendary8">Legendary 8</h2>
+  <h2 id="Legendary9">Legendary 9</h2>
+  <h2 id="Legendary10">Legendary 10</h2>
+
+<script>
+var time = 0
+var Clicks = 0
+var ClicksPerClick = 1
+
+function IncreaseScore(){
+  Clicks = Clicks + ClicksPerClick
+  document.getElementById("Clicks").innerHTML = Clicks
+  if (Clicks > 25){
+    document.getElementById("Bronze").style.color = "green";
+    ClicksPerClick = 2
+  }
+  if (Clicks > 50){
+    document.getElementById("Silver").style.color = "green";
+    ClicksPerClick = 5
+  }
+  if (Clicks > 100){
+    document.getElementById("Gold").style.color = "green";
+    ClicksPerClick = 10
+  }
+  if (Clicks > 200){
+    document.getElementById("Platinum").style.color = "green";
+    ClicksPerClick = 20
+  }
+  if (Clicks > 500){
+    document.getElementById("Diamond").style.color = "green";
+    ClicksPerClick = 50
+  }
+  if (Clicks > 1000){
+    document.getElementById("Legendary").style.color = "green";
+    ClicksPerClick = 100
+  }
+  if (Clicks > 5000){
+    document.getElementById("Legendary2").style.color = "green";
+    ClicksPerClick = 500
+  }
+  if (Clicks > 10000){
+    document.getElementById("Legendary3").style.color = "green";
+    ClicksPerClick = 1000
+  }
+  if (Clicks > 50000){
+    document.getElementById("Legendary4").style.color = "green";
+    ClicksPerClick = 5000
+  }
+  if (Clicks > 100000){
+    document.getElementById("Legendary5").style.color = "green";
+    ClicksPerClick = 10000
+  }
+  if (Clicks > 500000){
+    document.getElementById("Legendary6").style.color = "green";
+    ClicksPerClick = 50000
+  }
+  if (Clicks > 1000000){
+    document.getElementById("Legendary7").style.color = "green";
+    ClicksPerClick = 100000
+  }
+  if (Clicks > 5000000){
+    document.getElementById("Legendary8").style.color = "green";
+    ClicksPerClick = 500000
+  }
+  if (Clicks > 10000000){
+    document.getElementById("Legendary9").style.color = "green";
+    ClicksPerClick = 1000000
+  }
+  if (Clicks > 50000000){
+    document.getElementById("Legendary10").style.color = "green";
+    ClicksPerClick = 5000000
+  }
+}
+function ChangeTime(){
+  time = time + 1
+  document.getElementById("Time").innerHTML = Clicks/time
+}
+setInterval(ChangeTime, 1000)
+</script>
+</body>
+</html>
