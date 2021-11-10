@@ -1,0 +1,274 @@
+<title>Circle Attack | Online Games</title>
+<html lang="en">
+<head>
+<style>
+#container{
+  text-align: center;
+}
+  
+canvas {
+ background-color: lightblue;
+ border-style: solid;
+ border-width: 1px;
+}
+
+#title {
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom 20px;
+}
+label{
+  font-family: verdana;
+}
+</style>
+</head>
+<body>
+<style>
+  body{
+    font-family: verdana;
+  }
+</style>
+<div id="container">
+  <h1 id="title">Circle Attack</h1>
+  <h2 id="score"><label>Score: </label></h2>
+  <h2 id="highScore"><label>High-Score: </label>0</h2>
+<canvas id="myCanvas"  width="800" height="400" ></canvas>
+</div>
+<script>var playerX = 40;
+var playerY = 40;
+var PLAYER_SIZE = 20;
+var PLAYER_SPEED = 5;
+var ENEMY_SPEED = 50;
+var ENEMY_SIZE = 15;
+
+var enemyArray = [];
+var score;
+
+var aKeyPressed;
+var sKeyPressed;
+var dKeyPressed;
+var wKeyPressed;
+
+// sets up the canvas with its context
+var canvasObject = document.getElementById("myCanvas");
+var ctx = canvasObject.getContext("2d");
+
+var isPlaying = false;
+
+
+function resetGame()
+{
+
+     enemyX = canvasObject.width;
+     enemyY = getRandomInt(0, canvasObject.height);
+     playerX = PLAYER_SIZE + 10; //make it spawn just off the edge of the screen
+     playerY = canvasObject.height/2; //middle Y value
+     score = 0;
+     updateScore();
+     addEnemies(2); //add 4 enemies 
+}
+
+function addEnemies(numOfEnemies)
+{
+   enemyArray = [];
+  // if I is less than number of enemys we will keep iterating through the enemy arrat
+   for(var i = 0; i < numOfEnemies; i++)
+   {
+       enemyArray[i] = 
+ //add an enemy object into the array
+         {x:getRandomInt(canvasObject.width/2,canvasObject.width) , y: getRandomInt(ENEMY_SIZE, canvasObject.height-ENEMY_SIZE), size: ENEMY_SIZE}; 
+   }
+}
+
+
+function checkCollision()
+{
+  // create in an object eith 3 properties and setting it to variable thePlayer
+  var thePlayer = {radius: PLAYER_SIZE, x: playerX, y: playerY}; //player
+  // this loop checks through every enemy created in the enemy array 
+  for(var i = 0; i < enemyArray.length; i++)
+  {
+    // setting current loop position to always equal a variable called the enemy
+    var theEnemy = enemyArray[i]; //get the emeny 
+    var dx = thePlayer.x - theEnemy.x;
+    var dy = thePlayer.y - theEnemy.y;
+    var distance = Math.sqrt(dx * dx + dy * dy);
+    if (distance < thePlayer.radius + theEnemy.size) {
+     isPlaying = false; // collision detected!
+    }
+  }
+}
+
+
+// call the draw function every 20ms
+setInterval(draw, 20); 
+
+function drawPlayer() {
+  if(aKeyPressed === true){
+    playerX -= PLAYER_SPEED;
+  }
+  if(sKeyPressed === true){
+    playerY -= PLAYER_SPEED;
+  }
+  if(dKeyPressed === true){
+    playerX += PLAYER_SPEED;
+  }
+  if(wKeyPressed === true){
+    playerY += PLAYER_SPEED;
+  }
+  checkWalls();
+  
+   // draws the shape and location parameters x,y,radius of cirlce,starting angle ending angle
+  ctx.arc(playerX, playerY, PLAYER_SIZE, 0, Math.PI*2);
+ // gives the shape a color
+ctx.fillStyle = "#000000";
+ // filling the shape in with that color
+ctx.fill();
+ // stops drawing path
+ctx.closePath();
+
+}
+
+
+function draw(){
+ 
+  // Clears the previous drawing so it looks like movement 
+ctx.clearRect(0, 0, canvasObject.width, canvasObject.height)
+  
+   if(isPlaying) //if we're playing...
+  {
+      drawEnemy();
+      drawPlayer();
+      checkCollision();
+  }
+  else //we're not playing
+  {
+      drawClickToPlay(); //draw the text onto the canvas
+  } 
+              
+// begins drawing path
+// ctx.beginPath();
+  
+} 
+
+ function drawClickToPlay()
+{
+    ctx.font="30px verdana";
+    ctx.fillText("Game Over!",canvasObject.width/2 - 85 ,canvasObject.height/2 - 50);
+    ctx.fillText("Press 'p' to start",canvasObject.width/2 - 110, canvasObject.height/2 + 50);
+}
+
+//add an enemy object into the array
+
+
+// have computer listen for hitting certain keys
+document.addEventListener("keyup", keyUpHandler, false);
+
+document.addEventListener("keydown", keyDownHandler,
+false);
+
+// tells computer exact key thats being pressed
+function keyDownHandler(e) {
+ if (e.keyCode == 65) {
+ aKeyPressed = true;
+ }
+ else if (e.keyCode == 68) {
+ dKeyPressed = true;
+ }
+ else if (e.keyCode == 87) {
+ sKeyPressed = true;
+ }
+ else if (e.keyCode == 83) {
+ wKeyPressed = true;
+ }
+  else if(e.keyCode == 80) {
+      if(isPlaying == false){
+        resetGame(); 
+        isPlaying = true;
+        }
+    }
+}
+
+//tells computer the exact key thats being let unpressed
+function keyUpHandler(e) {
+ if (e.keyCode == 65) {
+ aKeyPressed = false;
+ }
+ else if (e.keyCode == 68) {
+ dKeyPressed = false;
+ }
+ else if (e.keyCode == 87) {
+ sKeyPressed = false;
+ }
+ else if (e.keyCode == 83) {
+ wKeyPressed = false;
+ }
+}
+
+function checkWalls(){
+  // if the x position goes below 0 aka off the screen then set x poition to 0 aka on screen
+  if(playerX < 20 ) playerX = 20;
+  if(playerY < 20) playerY = 20;
+//   if x or y goes behond canvas then set it to stay right on canvas edge
+  if(playerX > canvasObject.width) playerX = canvasObject.width;
+  if(playerY > canvasObject.height) playerY = canvasObject.height;
+}
+
+function updateScore(){
+  document.getElementById("score").innerHTML = score;
+  
+}
+
+
+
+
+function addOneEnemy(){
+    // pushing an enemy object with specified propertys into the enemyarray
+  enemyArray.push({x:getRandomInt(canvasObject.width/2,canvasObject.width) , y: getRandomInt(ENEMY_SIZE, canvasObject.height-ENEMY_SIZE), size: ENEMY_SIZE} ) 
+  
+}
+
+
+function drawEnemy() {
+  // were using a for loop to iterate through the enemy array
+  for(var i = 0; i < enemyArray.length; i++)
+  {
+    var theEnemy = enemyArray[i];
+    //giving the enemy a random position x
+    theEnemy.x -= Math.min(getRandomInt(10,20+score/5),40); 
+     //if the enemy is off the screen
+    if(theEnemy.x <= 20)
+    {
+      score = score+1; //add one to the score
+      if(score % 10 === 0 && score > 0){
+        // this calls the function that adds an enemy to object to our array
+        addOneEnemy();
+      }
+      updateScore();
+      //reset x position to the right side of the canvas
+      theEnemy.x = canvasObject.width; 
+      //pick a random y value
+      theEnemy.y = getRandomInt(ENEMY_SIZE, canvasObject.height-ENEMY_SIZE); 
+    }
+    ctx.beginPath();
+    ctx.arc(theEnemy.x, theEnemy.y, ENEMY_SIZE, 0, Math.PI*2);
+    ctx.fillStyle = "#0000FF";
+    ctx.fill();
+    ctx.closePath();
+    
+  }  
+}
+
+/*
+Helper method to generate a random integer 
+*/
+// Math.floor rounds the decimal number to be a whole number
+//
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+ // drawEnemy();</script>
+</body>
+</html>
