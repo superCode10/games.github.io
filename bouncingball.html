@@ -1,0 +1,84 @@
+<title>Bouncing Ball | Online Games</title>
+<html lang="en">
+<body>
+<div style="text-align: center">
+<h1 style="font-family: brush script mt; font-size: 50px">Bouncing Ball</h1>
+<canvas id="mycanvas"></canvas>
+<h2 style="font-family: brush script mt; font-size: 30px">Created by Supercode10</h2>
+</div>
+<script>
+
+
+// getting our canvas element
+var canvas =
+document.getElementById("mycanvas");
+// setting up drawing for canvas
+var ctx = canvas.getContext("2d");
+
+canvas.width = 960;
+canvas.height = 600;
+
+// calling the drawball function
+// setInterval must have parenthesis for function call to work
+setInterval(move_ball,25);
+
+// ball object
+var ball = {
+  radius: 20,
+  x: canvas.width / 2,
+  y: canvas.height -150,
+  dx: 10,
+  dy: -2,
+}
+
+// defining the drawball function
+function drawball(){
+//  call the clearRect method first so we can see the drawn circle as interval waits
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.beginPath();
+//   arc parameters: x,y,size,arc,
+ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
+ctx.stroke();
+ctx.fillStyle = "red";
+ctx.fill();
+}
+
+function move_ball(){
+  drawball()
+  // this code moves ball to the right also ball.x is the circles position ball.dx is the direction the ball can move by
+ball.x += ball.dx;
+ball.y += ball.dy;
+if (ball.x > canvas.width - ball.radius )
+    ball.dx -= 20;
+if(ball.x < 0)
+    ball.dx += 20
+if(ball.y < 0)
+    ball.dy += 20
+ if (ball.y > canvas.height)
+    ball.dy -= 20;
+}   
+// this will clear the canvas
+// ctx.clearRect(0, 0, canvas.width, canvas.height)
+/*
+10/20/21 
+goal: Learn at least 1 thing & have fun & complete project soon
+lessons:
+important code practices:
+*if stuck for 10-15 mins ask for help
+*baby step the project 
+*seek and you shall find
+p1. review how we can solve any problem in code!
+A1.
+p2. fix movement and clearing the canvas to create illusion of movement
+p3. fix bouncing off the walls
+*/
+</script>
+<style>
+#mycanvas {
+ border-style: solid;
+ border: 5px solid grey;
+ background-color: lightgreen; */
+}
+</style>
+</body>
+</html>
